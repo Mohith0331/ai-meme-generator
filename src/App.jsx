@@ -36,7 +36,7 @@ export default function App() {
     <div className="app-container">
       <header className="header">
         <h1>🤖 AI Meme Generator</h1>
-        <p>Upload any image and let AI craft 6 hilarious custom memes instantly.</p>
+        <p>Transform any ordinary photo into 6 hilarious, custom-captioned memes instantly using GPT-4o-mini.</p>
       </header>
 
       <main className="main-content">
@@ -48,30 +48,52 @@ export default function App() {
         )}
 
         {!loading && memes.length === 0 && (
-          <div 
-            className="drop-zone"
-            onClick={() => document.getElementById('file-input').click()}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => { e.preventDefault(); if (e.dataTransfer.files[0]) handleImageUpload(e.dataTransfer.files[0]); }}
-          >
-            <p className="drop-text">Drag & drop your image here, or <span>browse</span></p>
-            <p className="drop-sub">Supports JPG, PNG, WEBP</p>
-            <input id="file-input" type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) handleImageUpload(e.target.files[0]); }} style={{ display: 'none' }} />
+          <div className="hero-section">
+            {/* Visual Workflow Showcase */}
+            <div className="workflow-banner">
+              <div className="workflow-step">
+                <div className="step-icon">📤</div>
+                <span>1. Upload Photo</span>
+              </div>
+              <div className="workflow-arrow">→</div>
+              <div className="workflow-step">
+                <div className="step-icon">🧠</div>
+                <span>2. AI Context Analysis</span>
+              </div>
+              <div className="workflow-arrow">→</div>
+              <div className="workflow-step">
+                <div className="step-icon">🔥</div>
+                <span>3. 6 Hilarious Memes</span>
+              </div>
+            </div>
+
+            {/* Drag & Drop Upload Box */}
+            <div 
+              className="drop-zone"
+              onClick={() => document.getElementById('file-input').click()}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => { e.preventDefault(); if (e.dataTransfer.files[0]) handleImageUpload(e.dataTransfer.files[0]); }}
+            >
+              <div className="upload-icon-pulse">✨</div>
+              <p className="drop-text">Drag & drop your image here, or <span>browse files</span></p>
+              <p className="drop-sub">Supports JPG, PNG, WEBP (Auto-optimized for speed)</p>
+              <input id="file-input" type="file" accept="image/*" onChange={(e) => { if (e.target.files[0]) handleImageUpload(e.target.files[0]); }} style={{ display: 'none' }} />
+            </div>
           </div>
         )}
 
         {loading && (
           <div className="loading-section">
             <div className="spinner"></div>
-            <p className="loading-text">GPT-4o-mini is cooking up hilarious captions...</p>
-            <p className="loading-sub">This takes about 5–10 seconds.</p>
+            <p className="loading-text">🎨 AI is analyzing your image & baking memes...</p>
+            <p className="loading-sub">This takes about 10–20 seconds. Good things take time!</p>
           </div>
         )}
 
         {!loading && memes.length > 0 && (
           <div>
             <div className="results-header">
-              <h2>Select Your Favorite Meme:</h2>
+              <h2>🎉 Select Your Favorite Meme:</h2>
               <button className="reset-btn" onClick={() => setMemes([])}>🔄 Upload Another Image</button>
             </div>
 
@@ -83,7 +105,7 @@ export default function App() {
                   </div>
                   <div className="meme-card-body">
                     <p>"{meme.caption}"</p>
-                    <button className="select-btn">Select & View</button>
+                    <button className="select-btn">Select & Download</button>
                   </div>
                 </div>
               ))}
@@ -95,10 +117,10 @@ export default function App() {
           <div className="modal-overlay" onClick={() => setSelectedMeme(null)}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <button className="close-modal" onClick={() => setSelectedMeme(null)}>&times;</button>
-              <h3>Your Custom Meme</h3>
+              <h3>Your Masterpiece</h3>
               <img src={selectedMeme} alt="Selected Meme" className="modal-img" />
               <div className="modal-actions">
-                <a href={selectedMeme} download="custom_meme.jpg" className="download-btn">⬇️ Download Meme</a>
+                <a href={selectedMeme} download="ai_meme.jpg" className="download-btn">⬇️ Download Meme Image</a>
                 <button className="close-btn" onClick={() => setSelectedMeme(null)}>Close</button>
               </div>
             </div>
