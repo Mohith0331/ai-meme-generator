@@ -114,14 +114,11 @@ def generate_memes():
     file = request.files["image"]
     image_bytes = file.read()
 
-    # Encode uploaded image to base64 for OpenAI
     encoded_original = base64.b64encode(image_bytes).decode("utf-8")
     image_data_url = f"data:image/jpeg;base64,{encoded_original}"
 
-    # Step 1: Generate Captions
     captions = generate_meme_captions(client, image_data_url)
 
-    # Step 2: Generate 6 memes in memory
     meme_images = []
     for cap in captions:
       meme_b64 = overlay_caption_to_base64(image_bytes, cap)
